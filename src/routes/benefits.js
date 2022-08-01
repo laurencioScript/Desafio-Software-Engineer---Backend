@@ -1,28 +1,25 @@
 const router = require('express').Router();
 const seekCustomerBenefits = require('./../services/seekCustomerBenefits');
 
-router.get('/benefits', (req, res) => {
+router.get('/v1/benefits', async (req, res) => {
     try {
-        const { cpf, user, password } = req.body;
+        const query = req.query;
 
-        if(!cpf || !user || !password){
-        return res.status(422).send('Server on')
+        if(!query.cpf || !query.user || !query.password){
+            return res.status(422).send('Server on')
         }
 
-        user = 'RodGom21';
-        password = 'konsi2022*';
-        cpf = '8889251743';
-
-        const giftNumber = await seekCustomerBenefits({cpf, user, password });
+        const giftNumber = await seekCustomerBenefits({ 
+            cpf : query.cpf, 
+            user: query.user, 
+            password : query.password 
+        });
 
         return res.status(200).send({giftNumber})
 
     } catch (error) {
         console.log('>>> error', error);
-        if(error.showMessage){
-        return res.status(400).send(error.showMessage);
-        }
-        return res.status(400).send('There was a problem on the server');
+        return res.status(error.statusCode || 400).send(error.showMessage || 'There was a problem on the server');
     }
 });
 
