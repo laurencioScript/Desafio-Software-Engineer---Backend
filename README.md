@@ -14,8 +14,8 @@
 
 ```bash
   PORT=4000
-  DELAY=7000
-  PRODUCTION=true
+  DELAY=7000 - Interessante trabalhar com 7000 milissegundos de delay para o funcionamento correto
+  PRODUCTION=true - Quando a variavel estiver ativa não é possivel ver o browser
 ```
 
 - Com o nodeJs instalado em sua maquina rode os seguintes comandos.
